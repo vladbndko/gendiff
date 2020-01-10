@@ -1,0 +1,42 @@
+{
+  "name": "bvlad-gendiff",
+  "version": "1.0.0",
+  "description": "Hexlet project #2: Gendiff",
+  "keywords": [
+    "Gendiff",
+    "File differences",
+    "Hexlet project",
+    "Test work"
+  ],
+  "scripts": {
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bvlad05/frontend-project-lvl2.git"
+  },
+  "bin": {
+    "brain-games": "dist/bin/gendiff.js"
+  },
+  "author": "Vladyslav Bondarenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bvlad05/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/bvlad05/frontend-project-lvl2#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
+  "dependencies": {
+    "commander": "^4.1.0"
+  }
+}
