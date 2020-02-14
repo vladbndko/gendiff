@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Hexlet project #2: Gendiff",
   "main": "dist/index.js",
+  "bin": {
+    "gendiff": "dist/bin/gendiff.js"
+  },
   "keywords": [
     "Gendiff",
     "File differences",
@@ -16,9 +19,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bvlad05/frontend-project-lvl2.git"
-  },
-  "bin": {
-    "gendiff": "dist/bin/gendiff.js"
   },
   "engines": {
     "node": ">=13"
