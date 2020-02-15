@@ -1,9 +1,9 @@
-import fs from 'fs';
 import _ from 'lodash';
+import parse from './parsers';
 
 const genDiff = (firstConfig, secondConfig) => {
-  const first = JSON.parse(fs.readFileSync(firstConfig, 'utf8'));
-  const second = JSON.parse(fs.readFileSync(secondConfig, 'utf8'));
+  const first = parse(firstConfig);
+  const second = parse(secondConfig);
   const unionJson = { ...first, ...second };
   const result = [];
   // eslint-disable-next-line no-restricted-syntax
@@ -21,7 +21,7 @@ const genDiff = (firstConfig, secondConfig) => {
       result.push(`  + ${key}: ${key}`);
     }
   }
-  return result;
+  return `{\n${result.join('\n')}\n}`;
 };
 
 export default genDiff;

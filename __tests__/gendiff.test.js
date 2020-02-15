@@ -1,9 +1,9 @@
 import genDiff from '../src/gendiff';
 
-const diff = genDiff((`${__dirname}/fixtures/before.json`), (`${__dirname}/fixtures/after.json`));
-const result = `{\n${diff.join('\n')}\n}`;
+const diffJson = genDiff(`${__dirname}/fixtures/before.json`, `${__dirname}/fixtures/after.json`);
+const diffYml = genDiff(`${__dirname}/fixtures/before.yml`, `${__dirname}/fixtures/after.yml`);
 
-const mustBe = `{
+const result = `{
     host: hexlet.io
   - timeout: 50
   + timeout: 20
@@ -12,6 +12,10 @@ const mustBe = `{
   + verbose: verbose
 }`;
 
-test('gendiff', () => {
-  expect(result).toBe(mustBe);
+test('genDiff: JSON', () => {
+  expect(diffJson).toStrictEqual(result);
+});
+
+test('genDiff: YML', () => {
+  expect(diffYml).toStrictEqual(result);
 });

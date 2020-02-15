@@ -12,7 +12,7 @@ const parse = (file) => {
       return JSON.parse(content);
     case '.yml':
     case '.yaml':
-      return yaml.safeLoad(content);
+      return yaml.load(content);
     default:
       return content;
   }
