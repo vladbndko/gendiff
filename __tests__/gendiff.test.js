@@ -1,6 +1,6 @@
 import gendiff from '../src/gendiff';
 
-const diff = gendiff((`${__dirname}/../before.json`), (`${__dirname}/../after.json`));
+const diff = gendiff((`${__dirname}/fixtures/before.json`), (`${__dirname}/fixtures/after.json`));
 const result = `{\n${diff.join('\n')}\n}`;
 console.log(result);
 
