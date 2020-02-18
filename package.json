@@ -4,7 +4,7 @@
   "description": "Hexlet project #2: Gendiff",
   "main": "dist/index.js",
   "bin": {
-    "gendiff": "dist/bin/gendiff.js"
+    "gendiff": "dist/bin/genDiff.js"
   },
   "keywords": [
     "Gendiff",
