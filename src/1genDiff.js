@@ -2,7 +2,6 @@ import parse from './parsers';
 import buildDiff from './buildDiff';
 import render from './render';
 
-
 const genDiff = (firstConfig, secondConfig, format) => {
   const beforeObject = parse(firstConfig);
   const afterObject = parse(secondConfig);
