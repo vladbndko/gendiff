@@ -1,3 +1,3 @@
-import genDiff from './bin/gendiff';
+import genDiff from './bin/genDiff';
 
 export default genDiff;

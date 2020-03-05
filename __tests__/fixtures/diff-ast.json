@@ -12,7 +12,7 @@
       {
         "key": "setting2",
         "status": "deleted",
-        "afterValue": 200
+        "beforeValue": 200
       },
       {
         "key": "setting3",
@@ -35,24 +35,24 @@
           {
             "key": "ops",
             "status": "added",
-            "beforeValue": "vops"
+            "afterValue": "vops"
           }
         ]
       },
       {
         "key": "follow",
         "status": "added",
-        "beforeValue": false
+        "afterValue": false
       },
       {
         "key": "setting4",
         "status": "added",
-        "beforeValue": "blah blah"
+        "afterValue": "blah blah"
       },
       {
         "key": "setting5",
         "status": "added",
-        "beforeValue": {
+        "afterValue": {
           "key5": "value5"
         }
       }
@@ -87,14 +87,14 @@
   {
     "key": "group2",
     "status": "deleted",
-    "afterValue": {
+    "beforeValue": {
       "abc": 12345
     }
   },
   {
     "key": "group3",
     "status": "added",
-    "beforeValue": {
+    "afterValue": {
       "fee": 100500
     }
   }
