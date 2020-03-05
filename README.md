@@ -8,3 +8,5 @@
 [![asciicast](https://asciinema.org/a/301699.svg)](https://asciinema.org/a/301699)
 #### Usage with .ini
 [![asciicast](https://asciinema.org/a/301709.svg)](https://asciinema.org/a/301709)
+#### GenDiff with: pretty format
+[![asciicast](https://asciinema.org/a/307839.svg)](https://asciinema.org/a/307839)

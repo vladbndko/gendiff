@@ -1,22 +1,23 @@
 import fs from 'fs';
 import genDiff from '../src/genDiff';
-// import buildDiff from '../src/buildDiff';
-// import parse from '../src/parsers';
 
-/* test('Build ast', () => {
+test('GenDiff: json', () => {
   const before = `${__dirname}/fixtures/json/before.json`;
   const after = `${__dirname}/fixtures/json/after.json`;
-  const beforeObject = parse(before);
-  const afterObject = parse(after);
-  const diff = buildDiff(beforeObject, afterObject);
-  const result = fs.readFileSync(`${__dirname}/fixtures/diff-ast.json`, 'utf-8');
-  expect(JSON.stringify(diff)).toBe(result);
-  // buildDiff
-}); */
+  const result = fs.readFileSync(`${__dirname}/fixtures/result-diff.txt`, 'utf-8');
+  expect(genDiff(before, after, 'pretty')).toBe(result);
+});
 
-test('GenDiff', () => {
-  const before = `${__dirname}/fixtures/json/before.json`;
-  const after = `${__dirname}/fixtures/json/after.json`;
+test('GenDiff: yml', () => {
+  const before = `${__dirname}/fixtures/yaml/before.yaml`;
+  const after = `${__dirname}/fixtures/yaml/after.yaml`;
+  const result = fs.readFileSync(`${__dirname}/fixtures/result-diff.txt`, 'utf-8');
+  expect(genDiff(before, after, 'pretty')).toBe(result);
+});
+
+test('GenDiff: ini', () => {
+  const before = `${__dirname}/fixtures/ini/before.ini`;
+  const after = `${__dirname}/fixtures/ini/after.ini`;
   const result = fs.readFileSync(`${__dirname}/fixtures/result-diff.txt`, 'utf-8');
   expect(genDiff(before, after, 'pretty')).toBe(result);
 });

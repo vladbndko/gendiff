@@ -1,6 +1,8 @@
 common:
   follow: false
   setting1: 'Value 1'
+  setting2:
+    new: good
   setting3:
     key: value
   setting4: 'blah blah'
