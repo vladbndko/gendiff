@@ -1,6 +1,6 @@
-import pretty from './format/pretty';
-import json from './format/json';
-import plain from './format/plain';
+import pretty from './formatters/pretty';
+import json from './formatters/json';
+import plain from './formatters/plain';
 
 const render = (diff, format) => {
   const renders = { pretty, json, plain };
