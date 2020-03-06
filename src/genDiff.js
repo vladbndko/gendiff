@@ -1,6 +1,6 @@
-import parse from './formatters';
+import parse from './parse';
 import buildDiff from './buildDiff';
-import render from './render';
+import render from './formatters';
 
 const genDiff = (firstConfig, secondConfig, format = 'pretty') => {
   const beforeObject = parse(firstConfig);

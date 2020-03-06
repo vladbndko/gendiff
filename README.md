@@ -8,7 +8,9 @@
 [![asciicast](https://asciinema.org/a/301699.svg)](https://asciinema.org/a/301699)
 #### Usage with .ini
 [![asciicast](https://asciinema.org/a/301709.svg)](https://asciinema.org/a/301709)
-#### GenDiff in pretty format
+#### gendiff -f pretty
 [![asciicast](https://asciinema.org/a/307839.svg)](https://asciinema.org/a/307839)
-#### GenDiff in plain format
+#### gendiff -f plain
 [![asciicast](https://asciinema.org/a/307964.svg)](https://asciinema.org/a/307964)
+#### gendiff -f json
+[![asciicast](https://asciinema.org/a/308063.svg)](https://asciinema.org/a/308063)

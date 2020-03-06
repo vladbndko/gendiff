@@ -3,8 +3,9 @@ import genDiff from '../src/genDiff';
 
 const pretty = fs.readFileSync(`${__dirname}/fixtures/diff-pretty.txt`, 'utf-8');
 const plain = fs.readFileSync(`${__dirname}/fixtures/diff-plain.txt`, 'utf-8');
+const json = fs.readFileSync(`${__dirname}/fixtures/diff-json.txt`, 'utf-8');
 
-describe('GenDiff: JSON', () => {
+describe('json', () => {
   const before = `${__dirname}/fixtures/json/before.json`;
   const after = `${__dirname}/fixtures/json/after.json`;
   test('Pretty', () => {
@@ -13,9 +14,12 @@ describe('GenDiff: JSON', () => {
   test('Plain', () => {
     expect(genDiff(before, after, 'plain')).toBe(plain);
   });
+  test('Json', () => {
+    expect(genDiff(before, after, 'json')).toBe(json);
+  });
 });
 
-describe('GenDiff: YAML', () => {
+describe('yaml', () => {
   const before = `${__dirname}/fixtures/yaml/before.yaml`;
   const after = `${__dirname}/fixtures/yaml/after.yaml`;
   test('Pretty', () => {
@@ -24,9 +28,12 @@ describe('GenDiff: YAML', () => {
   test('Plain', () => {
     expect(genDiff(before, after, 'plain')).toBe(plain);
   });
+  test('Json', () => {
+    expect(genDiff(before, after, 'json')).toBe(json);
+  });
 });
 
-describe('GenDiff: INI', () => {
+describe('ini', () => {
   const before = `${__dirname}/fixtures/ini/before.ini`;
   const after = `${__dirname}/fixtures/ini/after.ini`;
   test('Pretty', () => {
@@ -34,5 +41,8 @@ describe('GenDiff: INI', () => {
   });
   test('Plain', () => {
     expect(genDiff(before, after, 'plain')).toBe(plain);
+  });
+  test('Json', () => {
+    expect(genDiff(before, after, 'json')).toBe(json);
   });
 });

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import isAllNumbers from '../utilities';
 
 const plain = (diff, parent = []) => {
   const result = diff.reduce((acc, option) => {
@@ -13,9 +14,8 @@ const plain = (diff, parent = []) => {
     };
     let afterValue = _.isObject(option.afterValue) ? '[complex value]' : option.afterValue;
     let beforeValue = _.isObject(option.beforeValue) ? '[complex value]' : option.beforeValue;
-    const regNumbers = /^[0-9]*$/;
-    afterValue = _.isString(option.afterValue) && !afterValue.match(regNumbers) ? `'${afterValue}'` : afterValue;
-    beforeValue = _.isString(option.beforeValue) && !beforeValue.match(regNumbers) ? `'${beforeValue}'` : beforeValue;
+    afterValue = _.isString(option.afterValue) && !isAllNumbers(afterValue) ? `'${afterValue}'` : afterValue;
+    beforeValue = _.isString(option.beforeValue) && !isAllNumbers(beforeValue) ? `'${beforeValue}'` : beforeValue;
     if (option.status === 'added') {
       line.tail = `added with value: ${afterValue}`;
     }
