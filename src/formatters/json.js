@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import isAllNumbers from '../utilities';
 
-const objItem = (obj) => {
+const iter = (obj) => {
   _.forIn(obj, (value, key) => {
     if (_.isString(value)) {
       if (isAllNumbers(value)) {
@@ -19,17 +19,20 @@ const replaceNumbers = (arr) => arr.map((option) => {
     const newChildren = replaceNumbers(children);
     return { ...rest, children: newChildren };
   }
-  let newOption = {};
+  const iterObj = {
+    newValue: '',
+    newOption: {},
+  };
   Object.entries(option).forEach(([key, value]) => {
-    let newValue = _.isObject(value) ? objItem(value) : value;
-    if (_.isString(newValue)) {
-      if (isAllNumbers(newValue)) {
-        newValue = Number(newValue);
+    iterObj.newValue = _.isObject(value) ? iter(value) : value;
+    if (_.isString(iterObj.newValue)) {
+      if (isAllNumbers(iterObj.newValue)) {
+        iterObj.newValue = Number(iterObj.newValue);
       }
     }
-    newOption = { ...newOption, [key]: newValue };
+    iterObj.newOption = { ...iterObj.newOption, [key]: iterObj.newValue };
   });
-  return newOption;
+  return iterObj.newOption;
 });
 
 export default (diff) => {

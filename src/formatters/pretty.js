@@ -18,16 +18,17 @@ const pretty = (diff, spacesCount = 0) => {
     const diffOption = {
       begin: `${' '.repeat(spacesCount + 2)}${sign} ${option.key}`,
       before: '',
+      stringBefore: '',
+      stringValue: '',
     };
     if (_.has(option, 'afterValue') && _.has(option, 'beforeValue')) {
       if (option.beforeValue === option.afterValue) {
         diffOption.value = option.afterValue;
       } else {
-        let stringBefore;
         if (_.isObject(option.beforeValue)) {
-          stringBefore = stringify(option.beforeValue, spacesCount + 4);
+          diffOption.stringBefore = stringify(option.beforeValue, spacesCount + 4);
         }
-        diffOption.before = `${' '.repeat(spacesCount + 2)}${signs.deleted} ${option.key}: ${stringBefore || option.beforeValue}`;
+        diffOption.before = `${' '.repeat(spacesCount + 2)}${signs.deleted} ${option.key}: ${diffOption.stringBefore || option.beforeValue}`;
         diffOption.value = option.afterValue;
       }
     } else if (_.has(option, 'afterValue') && !_.has(option, 'beforeValue')) {
@@ -37,11 +38,10 @@ const pretty = (diff, spacesCount = 0) => {
     } else if (_.has(option, 'children')) {
       diffOption.value = pretty(option.children, spacesCount + 4);
     }
-    let stringValue;
     if (_.isObject(diffOption.value)) {
-      stringValue = stringify(diffOption.value, spacesCount + 4);
+      diffOption.stringValue = stringify(diffOption.value, spacesCount + 4);
     }
-    const newAcc = [...acc, `${diffOption.before}`, `${diffOption.begin}: ${stringValue || diffOption.value}`];
+    const newAcc = [...acc, `${diffOption.before}`, `${diffOption.begin}: ${diffOption.stringValue || diffOption.value}`];
     return newAcc.filter((v) => v);
   }, []);
   return `{\n${result.join('\n')}\n${' '.repeat(spacesCount)}}`;
