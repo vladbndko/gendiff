@@ -1,5 +1,5 @@
 import fs from 'fs';
-import genDiff from '../src/genDiff';
+import genDiff from '..';
 
 const pretty = fs.readFileSync(`${__dirname}/fixtures/diff-pretty.txt`, 'utf-8');
 const plain = fs.readFileSync(`${__dirname}/fixtures/diff-plain.txt`, 'utf-8');
