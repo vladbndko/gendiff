@@ -1,16 +1,13 @@
 import _ from 'lodash';
-import isAllNumbers from '../utilities';
 
 const iter = (obj) => {
+  const newObj = { ...obj };
   _.forIn(obj, (value, key) => {
-    if (_.isString(value)) {
-      if (isAllNumbers(value)) {
-        // eslint-disable-next-line no-param-reassign
-        obj[key] = Number(value);
-      }
+    if (_.isString(value) && _.clamp(value)) {
+      newObj[key] = Number(value);
     }
   });
-  return obj;
+  return newObj;
 };
 
 const replaceNumbers = (arr) => arr.map((option) => {
@@ -25,10 +22,8 @@ const replaceNumbers = (arr) => arr.map((option) => {
   };
   Object.entries(option).forEach(([key, value]) => {
     iterObj.newValue = _.isObject(value) ? iter(value) : value;
-    if (_.isString(iterObj.newValue)) {
-      if (isAllNumbers(iterObj.newValue)) {
-        iterObj.newValue = Number(iterObj.newValue);
-      }
+    if (_.isString(iterObj.newValue) && _.clamp(iterObj.newValue)) {
+      iterObj.newValue = Number(iterObj.newValue);
     }
     iterObj.newOption = { ...iterObj.newOption, [key]: iterObj.newValue };
   });
@@ -36,6 +31,6 @@ const replaceNumbers = (arr) => arr.map((option) => {
 });
 
 export default (diff) => {
-  const result = replaceNumbers(diff);
-  return JSON.stringify(result, null, 2);
+  // const result = replaceNumbers(diff);
+  return JSON.stringify(diff, null, 2);
 };

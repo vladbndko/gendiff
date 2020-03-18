@@ -1,21 +1,32 @@
 import _ from 'lodash';
-import isAllNumbers from '../utilities';
+import isNumeric from '../utils';
 
-const plain = (diff, parent = []) => {
+const renderType = (value) => {
+  if (isNumeric(value)) {
+    return Number(value);
+  }
+  if (_.isString(value)) {
+    return `'${value}'`;
+  }
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+  return value;
+};
+
+const plain = (diff, parents = []) => {
   const result = diff.reduce((acc, option) => {
     if (_.has(option, 'children')) {
-      return [...acc, plain(option.children, [...parent, option.key])];
+      return [...acc, plain(option.children, [...parents, option.key])];
     }
     if (option.status === 'unchanged') {
       return acc;
     }
+    const afterValue = renderType(option.afterValue);
+    const beforeValue = renderType(option.beforeValue);
     const line = {
-      head: `Property '${[...parent, option.key].join('.')}' was`,
+      head: `Property '${[...parents, option.key].join('.')}' was`,
     };
-    let afterValue = _.isObject(option.afterValue) ? '[complex value]' : option.afterValue;
-    let beforeValue = _.isObject(option.beforeValue) ? '[complex value]' : option.beforeValue;
-    afterValue = _.isString(option.afterValue) && !isAllNumbers(afterValue) ? `'${afterValue}'` : afterValue;
-    beforeValue = _.isString(option.beforeValue) && !isAllNumbers(beforeValue) ? `'${beforeValue}'` : beforeValue;
     if (option.status === 'added') {
       line.tail = `added with value: ${afterValue}`;
     }
