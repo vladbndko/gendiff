@@ -1,61 +1,59 @@
 [
   {
     "key": "common",
-    "status": "unchanged",
+    "status": "hasChildren",
     "children": [
       {
         "key": "setting1",
         "status": "unchanged",
-        "beforeValue": "Value 1",
-        "afterValue": "Value 1"
+        "value": "Value 1"
       },
       {
         "key": "setting2",
         "status": "changed",
-        "beforeValue": 200,
-        "afterValue": {
+        "oldValue": 200,
+        "value": {
           "new": "good"
         }
       },
       {
         "key": "setting3",
         "status": "changed",
-        "beforeValue": true,
-        "afterValue": {
+        "oldValue": true,
+        "value": {
           "key": "value"
         }
       },
       {
         "key": "setting6",
-        "status": "unchanged",
+        "status": "hasChildren",
         "children": [
           {
             "key": "key",
             "status": "unchanged",
-            "beforeValue": "value",
-            "afterValue": "value"
+            "value": "value"
           },
           {
             "key": "ops",
             "status": "added",
-            "afterValue": "vops"
+            "value": "vops"
           }
         ]
       },
       {
         "key": "follow",
         "status": "added",
-        "afterValue": false
+        "value": false
       },
       {
         "key": "setting4",
         "status": "added",
-        "afterValue": "blah blah"
+        "value": "blah blah"
       },
       {
         "key": "setting5",
         "status": "added",
-        "afterValue": {
+        "value": {
           "key5": "value5"
         }
       }
@@ -63,41 +61,40 @@
   },
   {
     "key": "group1",
-    "status": "unchanged",
+    "status": "hasChildren",
     "children": [
       {
         "key": "baz",
         "status": "changed",
-        "beforeValue": "bas",
-        "afterValue": "bars"
+        "oldValue": "bas",
+        "value": "bars"
       },
       {
         "key": "foo",
         "status": "unchanged",
-        "beforeValue": "bar",
-        "afterValue": "bar"
+        "value": "bar"
       },
       {
         "key": "nest",
         "status": "changed",
-        "beforeValue": {
+        "oldValue": {
           "key": "value"
         },
-        "afterValue": "str"
+        "value": "str"
       }
     ]
   },
   {
     "key": "group2",
     "status": "deleted",
-    "beforeValue": {
+    "value": {
       "abc": 12345
     }
   },
   {
     "key": "group3",
     "status": "added",
-    "afterValue": {
+    "value": {
       "fee": 100500
     }
   }

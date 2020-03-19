@@ -5,31 +5,31 @@ import parse from './parse';
 import render from './formatters';
 
 const makeDiff = (obj1, obj2) => {
-  const unionObj = { ...obj1, ...obj2 };
-  return Object.keys(unionObj).reduce((acc, key) => {
-    const option = {
-      key,
-      status: 'unchanged',
-    };
+  const uniqKeys = _.uniq([..._.keys(obj1), ..._.keys(obj2)]);
+  const iter = (key) => {
+    const node = { key };
     if (_.has(obj1, key) && !_.has(obj2, key)) {
-      option.beforeValue = obj1[key];
-      option.status = 'deleted';
+      node.status = 'deleted';
+      node.value = obj1[key];
     } else if (!_.has(obj1, key) && _.has(obj2, key)) {
-      option.afterValue = obj2[key];
-      option.status = 'added';
+      node.status = 'added';
+      node.value = obj2[key];
     } else if (_.has(obj1, key) && _.has(obj2, key)) {
       if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
-        option.children = makeDiff(obj1[key], obj2[key]);
+        node.status = 'hasChildren';
+        node.children = makeDiff(obj1[key], obj2[key]);
+      } else if (obj1[key] !== obj2[key]) {
+        node.status = 'changed';
+        node.oldValue = obj1[key];
+        node.value = obj2[key];
       } else {
-        option.beforeValue = obj1[key];
-        option.afterValue = obj2[key];
-        if (obj1[key] !== obj2[key]) {
-          option.status = 'changed';
-        }
+        node.status = 'unchanged';
+        node.value = obj2[key];
       }
     }
-    return [...acc, option];
-  }, []);
+    return node;
+  };
+  return uniqKeys.map(iter);
 };
 
 const getData = (config) => {
@@ -38,9 +38,11 @@ const getData = (config) => {
   return parse(dataType, data);
 };
 
-export default (firstConfig, secondConfig, format = 'pretty') => {
+const genDiff = (firstConfig, secondConfig, format = 'pretty') => {
   const beforeData = getData(firstConfig);
   const afterData = getData(secondConfig);
   const diff = makeDiff(beforeData, afterData);
   return render(diff, format);
 };
+
+export { makeDiff, genDiff };

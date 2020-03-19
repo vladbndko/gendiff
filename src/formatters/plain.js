@@ -15,30 +15,18 @@ const renderType = (value) => {
 };
 
 const plain = (diff, parents = []) => {
-  const result = diff.reduce((acc, option) => {
-    if (_.has(option, 'children')) {
-      return [...acc, plain(option.children, [...parents, option.key])];
-    }
-    if (option.status === 'unchanged') {
-      return acc;
-    }
-    const afterValue = renderType(option.afterValue);
-    const beforeValue = renderType(option.beforeValue);
-    const line = {
-      head: `Property '${[...parents, option.key].join('.')}' was`,
+  const iter = (node) => {
+    const genHead = (key) => `Property '${[...parents, key].join('.')}'`;
+    const nodes = {
+      unchanged: () => false,
+      hasChildren: () => plain(node.children, [...parents, node.key]),
+      added: () => `${genHead(node.key)} was added with value: ${renderType(node.value)}`,
+      changed: () => `${genHead(node.key)} was changed from ${renderType(node.oldValue)} to ${renderType(node.value)}`,
+      deleted: () => `${genHead(node.key)} was deleted`,
     };
-    if (option.status === 'added') {
-      line.tail = `added with value: ${afterValue}`;
-    }
-    if (option.status === 'deleted') {
-      line.tail = 'deleted';
-    }
-    if (option.status === 'changed') {
-      line.tail = `changed from ${beforeValue} to ${afterValue}`;
-    }
-    return [...acc, `${line.head} ${line.tail}`];
-  }, []);
-  return _.flattenDeep(result).join('\n');
+    return nodes[node.status]();
+  };
+  return _.flattenDeep(diff.map(iter).filter((n) => n)).join('\n');
 };
 
 export default plain;

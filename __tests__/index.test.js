@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import genDiff from '..';
+import { genDiff, makeDiff } from '..';
+import resDiff from '../__fixtures__/diff-ast';
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
@@ -15,19 +16,24 @@ const formats = ['pretty', 'plain', 'json'];
 
 const getDiff = (format) => readFile(`diff-${format}.txt`);
 
-/*
-test.each(filePaths)(
+
+/*test.each(filePaths)(
   'genDiff(%s, %s)',
   (before, after) => {
     formats.forEach((format) => {
       expect(genDiff(before, after, format)).toBe(getDiff(format));
     });
   },
-);
-*/
+);*/
 
-test('Plain', () => {
-  expect(genDiff(getFixturePath('before.json'), getFixturePath('after.json'), 'plain')).toBe(getDiff('plain'));
-  expect(genDiff(getFixturePath('before.yaml'), getFixturePath('after.yaml'), 'plain')).toBe(getDiff('plain'));
-  expect(genDiff(getFixturePath('before.ini'), getFixturePath('after.ini'), 'plain')).toBe(getDiff('plain'));
+
+test('json', () => {
+  expect(genDiff(getFixturePath('before.ini'), getFixturePath('after.ini'), 'json')).toBe(getDiff('json'));
+  // expect(genDiff(getFixturePath('before.yaml'), getFixturePath('after.yaml'), 'pretty')).toBe(getDiff('pretty'));
+  // expect(genDiff(getFixturePath('before.ini'), getFixturePath('after.ini'), 'pretty')).toBe(getDiff('pretty'));
 });
+
+/* test('New-AST', () => {
+  const diff = makeDiff(JSON.parse(readFile('before.json')), JSON.parse(readFile('after.json')));
+  expect(diff).toEqual(resDiff);
+}); */
