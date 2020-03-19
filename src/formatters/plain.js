@@ -1,10 +1,6 @@
 import _ from 'lodash';
-import isNumeric from '../utils';
 
 const renderType = (value) => {
-  if (isNumeric(value)) {
-    return Number(value);
-  }
   if (_.isString(value)) {
     return `'${value}'`;
   }

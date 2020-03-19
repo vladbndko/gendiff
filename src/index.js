@@ -45,4 +45,4 @@ const genDiff = (firstConfig, secondConfig, format = 'pretty') => {
   return render(diff, format);
 };
 
-export { makeDiff, genDiff };
+export default genDiff;

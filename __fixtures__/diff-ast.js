@@ -11,7 +11,7 @@ export default [
       {
         key: 'setting2',
         status: 'changed',
-        oldValue: 200,
+        oldValue: '200',
         value: {
           new: 'good',
         },
@@ -88,14 +88,14 @@ export default [
     key: 'group2',
     status: 'deleted',
     value: {
-      abc: 12345,
+      abc: '12345',
     },
   },
   {
     key: 'group3',
     status: 'added',
     value: {
-      fee: 100500,
+      fee: '100500',
     },
   },
 ];
