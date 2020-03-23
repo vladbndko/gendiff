@@ -15,7 +15,6 @@ const formats = ['pretty', 'plain', 'json'];
 
 const getDiff = (format) => readFile(`diff-${format}.txt`);
 
-
 test.each(filePaths)(
   'genDiff(%s, %s)',
   (before, after) => {

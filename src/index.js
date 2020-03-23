@@ -4,32 +4,26 @@ import _ from 'lodash';
 import parse from './parse';
 import render from './formatters';
 
-const makeDiff = (obj1, obj2) => {
-  const uniqKeys = _.uniq([..._.keys(obj1), ..._.keys(obj2)]);
-  const iter = (key) => {
-    const node = { key };
-    if (_.has(obj1, key) && !_.has(obj2, key)) {
-      node.status = 'deleted';
-      node.value = obj1[key];
-    } else if (!_.has(obj1, key) && _.has(obj2, key)) {
-      node.status = 'added';
-      node.value = obj2[key];
-    } else if (_.has(obj1, key) && _.has(obj2, key)) {
-      if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
-        node.status = 'hasChildren';
-        node.children = makeDiff(obj1[key], obj2[key]);
-      } else if (obj1[key] !== obj2[key]) {
-        node.status = 'changed';
-        node.oldValue = obj1[key];
-        node.value = obj2[key];
-      } else {
-        node.status = 'unchanged';
-        node.value = obj2[key];
-      }
+const makeDiff = (before, after) => {
+  const uniqKeys = Object.keys({ ...before, ...after });
+  return uniqKeys.map((key) => {
+    if (_.has(before, key) && !_.has(after, key)) {
+      return { key, status: 'deleted', value: before[key] };
     }
-    return node;
-  };
-  return uniqKeys.map(iter);
+    if (!_.has(before, key) && _.has(after, key)) {
+      return { key, status: 'added', value: after[key] };
+    }
+    if (_.has(before, key) && _.has(after, key)
+      && _.isObject(before[key]) && _.isObject(after[key])) {
+      return { key, status: 'hasChildren', children: makeDiff(before[key], after[key]) };
+    }
+    if (_.has(after, key) && _.has(before, key) && before[key] !== after[key]) {
+      return {
+        key, status: 'changed', oldValue: before[key], value: after[key],
+      };
+    }
+    return { key, status: 'unchanged', value: after[key] };
+  });
 };
 
 const getData = (config) => {
