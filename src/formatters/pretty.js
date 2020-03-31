@@ -13,6 +13,7 @@ const stringify = (obj, spaces) => {
   return `{\n${result.join('\n')}\n${' '.repeat(spaces)}}`;
 };
 
+
 const pretty = (diff, spaces = 0) => {
   const iter = (node) => {
     const genValue = (value) => (_.isObject(value) ? stringify(value, spaces + 4) : value);
