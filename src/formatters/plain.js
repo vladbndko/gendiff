@@ -12,13 +12,12 @@ const renderType = (value) => {
 
 const plain = (diff, parents = []) => {
   const iter = (node) => {
-    const genHead = (key) => `Property '${[...parents, key].join('.')}'`;
     const nodes = {
-      unchanged: () => false,
+      unchanged: () => null,
       hasChildren: () => plain(node.children, [...parents, node.key]),
-      added: () => `${genHead(node.key)} was added with value: ${renderType(node.value)}`,
-      changed: () => `${genHead(node.key)} was changed from ${renderType(node.oldValue)} to ${renderType(node.value)}`,
-      deleted: () => `${genHead(node.key)} was deleted`,
+      added: () => `Property '${[...parents, node.key].join('.')}' was added with value: ${renderType(node.value)}`,
+      changed: () => `Property '${[...parents, node.key].join('.')}' was changed from ${renderType(node.oldValue)} to ${renderType(node.value)}`,
+      deleted: () => `Property '${[...parents, node.key].join('.')}' was deleted`,
     };
     return nodes[node.status]();
   };
