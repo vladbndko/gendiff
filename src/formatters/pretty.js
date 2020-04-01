@@ -1,33 +1,32 @@
 import _ from 'lodash';
 
-const signs = {
-  unchanged: ' ',
-  hasChildren: ' ',
-  added: '+',
-  changed: '-',
-  deleted: '-',
+const makeIndent = (deep) => ' '.repeat(deep * 4);
+
+const stringify = (value, deep) => {
+  if (!_.isObject(value)) {
+    return value;
+  }
+  const result = _.keys(value).map((key) => `${makeIndent(deep + 1)}${key}: ${value[key]}`);
+  return `{\n${result}\n${makeIndent(deep)}}`;
 };
 
-const stringify = (obj, spaces) => {
-  const result = Object.entries(obj).reduce((acc, [key, value]) => [...acc, `${' '.repeat(spaces + 4)}${key}: ${value}`], []);
-  return `{\n${result.join('\n')}\n${' '.repeat(spaces)}}`;
+const nodeTypes = {
+  unchanged: (node, deep) => `${makeIndent(deep)}    ${node.key}: ${stringify(node.value, deep + 1)}`,
+  hasChildren: (node, deep, f) => `${makeIndent(deep)}    ${node.key}: ${f(node.children, deep + 1)}`,
+  added: (node, deep) => `${makeIndent(deep)}  + ${node.key}: ${stringify(node.value, deep + 1)}`,
+  changed: (node, deep) => [
+    `${makeIndent(deep)}  - ${node.key}: ${stringify(node.oldValue, deep + 1)}`,
+    `${makeIndent(deep)}  + ${node.key}: ${stringify(node.value, deep + 1)}`,
+  ].join('\n'),
+  deleted: (node, deep) => `${makeIndent(deep)}  - ${node.key}: ${stringify(node.value, deep + 1)}`,
 };
 
-const pretty = (diff, spaces = 0) => {
-  const iter = (node) => {
-    const genValue = (value) => (_.isObject(value) ? stringify(value, spaces + 4) : value);
-    const genHead = (sign) => `${' '.repeat(spaces + 2)}${signs[sign]} ${node.key}`;
-    const nodes = {
-      unchanged: () => `${genHead(node.status)}: ${genValue(node.value)}`,
-      hasChildren: () => `${genHead(node.status)}: ${pretty(node.children, spaces + 4)}`,
-      added: () => `${genHead(node.status)}: ${genValue(node.value)}`,
-      changed: () => `${genHead(node.status)}: ${genValue(node.oldValue)}\n${genHead('added')}: ${genValue(node.value)}`,
-      deleted: () => `${genHead(node.status)}: ${genValue(node.value)}`,
-    };
-    return nodes[node.status]();
+const pretty = (diff) => {
+  const iter = (nodes, deep) => {
+    const result = nodes.map((node) => nodeTypes[node.status](node, deep, iter));
+    return `{\n${_.flatten(result).join('\n')}\n${makeIndent(deep)}}`;
   };
-  const resultArr = diff.map(iter);
-  return `{\n${resultArr.join('\n')}\n${' '.repeat(spaces)}}`;
+  return iter(diff, 0);
 };
 
 export default pretty;

@@ -5,8 +5,8 @@ import parse from './parse';
 import render from './formatters';
 
 const makeDiff = (before, after) => {
-  const uniqKeys = Object.keys({ ...before, ...after });
-  return uniqKeys.map((key) => {
+  const keys = _.union(_.keys(before), _.keys(after));
+  return keys.map((key) => {
     if (_.has(before, key) && !_.has(after, key)) {
       return { key, status: 'deleted', value: before[key] };
     }
