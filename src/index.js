@@ -26,16 +26,16 @@ const makeDiff = (before, after) => {
   });
 };
 
-const getData = (config) => {
-  const dataType = path.extname(config).replace('.', '');
-  const data = fs.readFileSync(config, 'utf8');
+const getData = (filePath) => {
+  const dataType = path.extname(filePath).replace('.', '');
+  const data = fs.readFileSync(filePath, 'utf8');
   return parse(dataType, data);
 };
 
-const genDiff = (firstConfig, secondConfig, format = 'pretty') => {
-  const beforeData = getData(firstConfig);
-  const afterData = getData(secondConfig);
-  const diff = makeDiff(beforeData, afterData);
+const genDiff = (firstFilePath, secondFilePath, format = 'pretty') => {
+  const firstFile = getData(firstFilePath);
+  const secondFile = getData(secondFilePath);
+  const diff = makeDiff(firstFile, secondFile);
   return render(diff, format);
 };
 
